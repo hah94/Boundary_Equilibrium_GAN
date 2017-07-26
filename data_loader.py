@@ -25,7 +25,7 @@ def maybe_download_and_extract():
 
 		if file_path.endswith(".zip"):
 			zipfile.Zipfile(file=file_path, mode="r").extractall(data_dir)
-		elif file_path.endswith(".tar"):
+		elif file_path.endswith(".tar.gz"):
 			tarfile.open(name=file_path, mode="r:gz").extractall(data_dir)
 
 		print ("Done.")
@@ -48,11 +48,11 @@ def load_CIFAR10_batch(filename):
 
 def load_data():
   '''load all CIFAR-10 data and merge training batches'''
-
+  maybe_download_and_extract()
   xs = []
   ys = []
   for i in range(1, 6):
-    filename = 'cifar-10-batches-py/data_batch_' + str(i)
+    filename = 'data/cifar-10-batches-py/data_batch_' + str(i)
     X, Y = load_CIFAR10_batch(filename)
     xs.append(X)
     ys.append(Y)
@@ -61,31 +61,22 @@ def load_data():
   y_train = np.concatenate(ys)
   del xs, ys
 
-  x_test, y_test = load_CIFAR10_batch('cifar-10-batches-py/test_batch')
-
   classes = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse',
     'ship', 'truck']
 
   # Normalize Data
   mean_image = np.mean(x_train, axis=0)
   x_train -= mean_image
-  x_test -= mean_image
 
   data_dict = {
     'images_train': x_train,
     'labels_train': y_train,
-    'images_test': x_test,
-    'labels_test': y_test,
     'classes': classes
   }
   im_tr = np.array(data_dict['images_train'])
   im_tr = np.reshape(im_tr, (-1, 3, 32, 32))
   im_tr = np.transpose(im_tr, (0,2,3,1))
   data_dict['images_train'] = im_tr
-  im_te = np.array(data_dict['images_test'])
-  im_te = np.reshape(im_te, (-1, 3, 32, 32))
-  im_te = np.transpose(im_te, (0,2,3,1))
-  data_dict['images_test'] = im_te
   return data_dict
 
 #def generate_random_batch(images, labels, batch_size):
@@ -110,8 +101,6 @@ def main():
   data_sets = load_data()
   print(data_sets['images_train'].shape)
   print(data_sets['labels_train'].shape)
-  print(data_sets['images_test'].shape)
-  print(data_sets['labels_test'].shape)
 
 if __name__ == '__main__':
   main()
