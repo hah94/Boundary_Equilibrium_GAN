@@ -31,7 +31,7 @@ def D_AE(x, size=64, hidden_num=256, reuse=False, name='D_AE'):
 				e = slim.conv2d(e, size * 2, scope='conv2')
 				e = slim.conv2d(e, size * 4, scope='conv3')
 				e = slim.conv2d(e, size * 8, scope='conv4')
-				e = slim.flatten(e, scope='flatten1')
+				#e = slim.flatten(e, scope='flatten1')
 				e = slim.fully_connected(e, hidden_num, scope='fc1')
 		
 		#Decode
