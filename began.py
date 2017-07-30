@@ -9,7 +9,7 @@ class BEGAN():
 	def __init__(self, data):
 		self.data = data
 		self.z_dim = 100
-		self.size = 32
+		self.size = 64
 		self.channel = 3
 		self.X = tf.placeholder(tf.float32, shape=[None, self.size, self.size, self.channel])
 		self.z = tf.placeholder(tf.float32, shape=[None, self.z_dim])
