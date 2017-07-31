@@ -20,7 +20,7 @@ def lrelu(x, leak=0.2, name="lrelu"):
 		l = l1 * x + l2 * abs(x)
 		return l
 
-def D_AE(x, size=64, hidden_num=256, reuse=False, name='D_AE'):
+def D_AE(x, size=32, hidden_num=256, reuse=False, name='D_AE'):
 	with tf.variable_scope(name) as scope:
 		if reuse:
 			scope.reuse_variables()
@@ -41,7 +41,7 @@ def D_AE(x, size=64, hidden_num=256, reuse=False, name='D_AE'):
 				d = tf.reshape(d, (-1, 4, 4, 512))
 				d = slim.conv2d_transpose(d, 256, 3, scope='deconv1')
 				d = slim.conv2d_transpose(d, 128, 3, scope='deconv2')
-				d = slim.conv2d_transpose(d, 64, 3, scope='deconv3')
+				d = slim.conv2d_transpose(d, 32, 3, scope='deconv3')
 				d = slim.conv2d_transpose(d, 3, 3, activation_fn=tf.nn.sigmoid, scope='deconv4')
 
 		return d
