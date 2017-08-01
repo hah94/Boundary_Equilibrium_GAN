@@ -26,7 +26,7 @@ def D_AE(x, size=32, hidden_num=256, reuse=False, name='D_AE'):
 			scope.reuse_variables()
 		#Encode
 		with slim.arg_scope([slim.conv2d, slim.fully_connected], activation_fn=lrelu, weights_initializer=tf.random_normal_initializer(0, 0.02)):
-			with slim.arg_scope([slim.conv2d], kernel_size=3, stride=2, normalizer_fn=slim.batch_norm, padding='SAME'):
+			with slim.arg_scope([slim.conv2d], kernel_size=3, stride=2, normalizer_fn=slim.batch_norm, padding='SAME', data_format=DATA_FORMAT_NHWC):
 				e = slim.conv2d(x, size, scope='conv1')
 				e = slim.conv2d(e, size * 2, scope='conv2')
 				e = slim.conv2d(e, size * 4, scope='conv3')
