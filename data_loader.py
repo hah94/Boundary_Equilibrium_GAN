@@ -6,6 +6,7 @@ import tarfile
 import numpy as np
 import pickle
 import sys
+import scipy.misc
 
 url = "https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz"
 data_dir = 'data/'
@@ -31,6 +32,11 @@ def maybe_download_and_extract():
 		print ("Done.")
 	else:
 		print("Data already exists")
+
+def resize_image(img_path, resize = 64):
+	img = scipy.misc.imread(img_path).astype(np.float)
+	crop_img = scipy.misc.imresize(img, [resize, resize])
+	return np.array(crop_image)/255.0
 	
 def load_CIFAR10_batch(filename):
   '''load data from single CIFAR-10 file'''
@@ -76,6 +82,8 @@ def load_data():
   im_tr = np.array(data_dict['images_train'])
   im_tr = np.reshape(im_tr, (-1, 3, 32, 32))
   im_tr = np.transpose(im_tr, (0,2,3,1))
+  im_train = [resize_image(img_path) for img_path in im_tr]
+  im_tr = np.array(im_train).astype(np.float32)
   data_dict['images_train'] = im_tr
   return data_dict
 
