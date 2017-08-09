@@ -7,6 +7,7 @@ import numpy as np
 import pickle
 import sys
 import scipy.misc
+import tensorflow as tf
 
 url = "https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz"
 data_dir = 'data/'
@@ -33,10 +34,6 @@ def maybe_download_and_extract():
 	else:
 		print("Data already exists")
 
-def resize_image(img_path, resize = 64):
-	img = scipy.misc.imread(img_path).astype(np.float)
-	crop_img = scipy.misc.imresize(img, [resize, resize])
-	return np.array(crop_image)/255.0
 	
 def load_CIFAR10_batch(filename):
   '''load data from single CIFAR-10 file'''
@@ -71,8 +68,8 @@ def load_data():
     'ship', 'truck']
 
   # Normalize Data
-  mean_image = np.mean(x_train, axis=0)
-  x_train -= mean_image
+  #mean_image = np.mean(x_train, axis=0)
+  #x_train -= mean_image
 
   data_dict = {
     'images_train': x_train,
@@ -80,11 +77,13 @@ def load_data():
     'classes': classes
   }
   im_tr = np.array(data_dict['images_train'])
-  im_tr = np.reshape(im_tr, (-1, 3, 32, 32))
-  im_tr = np.transpose(im_tr, (0,2,3,1))
-  im_train = [resize_image(img_path) for img_path in im_tr]
-  im_tr = np.array(im_train).astype(np.float32)
-  data_dict['images_train'] = im_tr
+  im_tr_reshaped = np.zeros([50000,32,32,3])
+
+  for i in range(50000):
+    new_im = im_tr[i].reshape(3,32,32).transpose(1,2,0)
+    im_tr_reshaped[i] = tf.image.resize_images(new_im, [64, 64])
+
+  data_dict['images_train'] = im_tr_reshaped
   return data_dict
 
 #def generate_random_batch(images, labels, batch_size):
