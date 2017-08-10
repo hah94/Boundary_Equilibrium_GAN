@@ -77,13 +77,12 @@ def load_data():
     'classes': classes
   }
   im_tr = np.array(data_dict['images_train'])
-  im_tr_reshaped = np.zeros([50000,32,32,3])
-
-  for i in range(50000):
-    new_im = im_tr[i].reshape(3,32,32).transpose(1,2,0)
-    im_tr_reshaped[i] = tf.image.resize_images(new_im, [64, 64])
-
-  data_dict['images_train'] = im_tr_reshaped
+  im_tr = np.reshape(im_tr, (-1, 3, 32, 32))
+  im_tr = np.transpose(im_tr, (0, 2, 3, 1))
+  im_tr_reshaped = tf.image.resize_images(im_tr, [64, 64])
+  with tf.Session() as sess:
+    im_tr_array = im_tr_reshaped.eval()
+  data_dict['images_train'] = im_tr_array
   return data_dict
 
 #def generate_random_batch(images, labels, batch_size):
