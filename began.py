@@ -41,10 +41,10 @@ class BEGAN():
 
 		for epoch in range(total_epoch):
 			lr = init_lr * pow(0.5, epoch // 50000)
-			idxs = np.random.permutation(self.data.shape[0])
-			x = self.data[idxs]
+			#idxs = np.random.permutation(50000)
+			#x = self.data[idxs]
 			for i in range(50000 // batch_size):
-				batch_X = x[i * batch_size : (i+1) * batch_size]
+				batch_X = self.data[i * batch_size : (i+1) * batch_size]
 				batch_z = np.random.uniform(-1., 1., size=[batch_size, self.z_dim])
 				_, _, kn = self.sess.run([self.D_optimizer, self.G_optimizer, self.kn], 
 										 feed_dict = {self.X: batch_X, self.z: batch_z, self.k: min(max(kn,0.), 1.), self.lr: lr})
@@ -72,7 +72,7 @@ class BEGAN():
 				tf.train.saver().save(self.sess, 'checkpoint/began_epoch_{}.ckpt'.format(epoch))
 
 if __name__ == '__main__' :
-	os.environ['CUDA_VISIBLE_DEVICES'] = '3,4,5,6'
+	#os.environ['CUDA_VISIBLE_DEVICES'] = '3,4,5,6'
 	sample_dir = 'samples/'
 	if not os.path.exists(sample_dir):
 		os.makedirs(sample_dir)
