@@ -9,6 +9,7 @@ import sys
 import scipy.misc
 import tensorflow as tf
 
+#size 64 x 64
 url = "https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz"
 data_dir = 'data/'
 
