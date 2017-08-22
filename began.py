@@ -50,7 +50,7 @@ class BEGAN():
 										 feed_dict = {self.X: batch_X, self.z: batch_z, self.k: min(max(kn,0.), 1.), self.lr: lr})
 				
 			if (epoch % 1000 == 0) :
-				D, G, M = self.sess.run([self.D_loss, self.G_loss, self.M_global],
+				D, G, M = self.sess.run([self.D_loss, self.G_loss, self.M],
 										feed_dict = {self.X: batch_X, self.z: batch_z, self.k: min(max(kn, 0.), 1.), self.lr: lr})
 				print('Epoch: {}, Dloss: {:.4}, Gloss: {:.4}, M_global: {:.4}, k_value: {:.6}, learning_rate: {:.8}'.
 					  format(epoch, D, G, M, min(max(kn, 0.), 1.), lr))
