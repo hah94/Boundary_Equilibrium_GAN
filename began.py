@@ -58,18 +58,18 @@ class BEGAN():
 				sample_X, D_real, samples = self.sess.run([self.X, self.D_real, self.Gen_sample],
 														  feed_dict={self.X: batch_X[:16,:,:,:], 
 														  	         self.z: np.random.uniform(-1., 1., size=[16, self.z_dim])})
-				im1 = Image.fromarray(sample_X)
+				im1 = Image.fromarray(sample_X[0].astype(np.uint8),'RGB')
 				im1.save('{}/{}_X.png'.format(sample_dir, epoch))
-				im2 = Image.fromarray(D_real)
+				im2 = Image.fromarray(D_real[0].astype(np.uint8),'RGB')
 				im2.save('{}/{}_D_real.png'.format(sample_dir, epoch))
-				im3 = Image.fromarray(samples)					
+				im3 = Image.fromarray(samples[0].astype(np.uint8),'RGB')			
 				im3.save('{}/{}_G.png'.format(sample_dir, epoch))
 
 			if (epoch % 10000 == 0) :
 				check_dir = 'checkpoint/'
 				if not os.path.exists(check_dir):
 					os.makedirs(check_dir)
-				tf.train.saver().save(self.sess, 'checkpoint/began_epoch_{}.ckpt'.format(epoch))
+				tf.train.Saver().save(self.sess, 'checkpoint/began_epoch_{}.ckpt'.format(epoch))
 
 if __name__ == '__main__' :
 	#os.environ['CUDA_VISIBLE_DEVICES'] = '3,4,5,6'
