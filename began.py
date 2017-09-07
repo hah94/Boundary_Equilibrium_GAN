@@ -65,7 +65,7 @@ class BEGAN():
 				im3 = Image.fromarray(samples[0].astype(np.uint8),'RGB')			
 				im3.save('{}/{}_G.png'.format(sample_dir, epoch))
 
-			if (epoch % 10000 == 0) :
+			if (epoch % 50000 == 0) :
 				check_dir = 'checkpoint/'
 				if not os.path.exists(check_dir):
 					os.makedirs(check_dir)
