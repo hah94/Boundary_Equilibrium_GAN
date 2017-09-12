@@ -1,3 +1,0 @@
-1. img size 32x32 test
-2. img size 64x64 test
-3. deconv size down to 32 test
