@@ -10,4 +10,4 @@
 ====================
 
 * 기존의 GAN은 sample간의 data distribution을 직접적으로 match하려고 하는 반면, 이 논문에서는 auto-encoder loss distribution 간의 match를 하고자 했다. 이 때 Wasserstein distance가 이용된다.  
-* gamma = G(z) 와 x 의 expectation error 간의 비율 , 이것을 이용해 image diversity / quality 간의 trade-off를 조절할수 있다. 더 자세한 것은 논문에
+* gamma = G(z) 와 x 의 expectation error 간의 비율 , 이것을 이용해 image diversity / quality 간의 trade-off를 조절할수 있다. See more in [BEGAN](https://arxiv.org/pdf/1703.10717.pdf)
